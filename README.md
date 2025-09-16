@@ -1,43 +1,59 @@
 # PressPlayC.github.io
-<!-- TradingView Widget BEGIN -->
-<div class="tradingview-widget-container">
-  <div class="tradingview-widget-container__widget"></div>
-  <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Ticker tape by TradingView</span></a></div>
-  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-  {
-  "symbols": [
-    {
-      "proName": "FOREXCOM:SPXUSD",
-      "title": "S&P 500 Index"
+// TradingViewWidget.jsx
+import React, { useEffect, useRef, memo } from 'react';
+
+function TradingViewWidget() {
+  const container = useRef();
+
+  useEffect(
+    () => {
+      const script = document.createElement("script");
+      script.src = "https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js";
+      script.type = "text/javascript";
+      script.async = true;
+      script.innerHTML = `
+        {
+          "symbols": [
+            {
+              "proName": "FOREXCOM:SPXUSD",
+              "title": "S&P 500 Index"
+            },
+            {
+              "proName": "FOREXCOM:NSXUSD",
+              "title": "US 100 Cash CFD"
+            },
+            {
+              "proName": "FX_IDC:EURUSD",
+              "title": "EUR to USD"
+            },
+            {
+              "proName": "BITSTAMP:BTCUSD",
+              "title": "Bitcoin"
+            },
+            {
+              "proName": "BITSTAMP:ETHUSD",
+              "title": "Ethereum"
+            }
+          ],
+          "colorTheme": "light",
+          "locale": "en",
+          "largeChartUrl": "",
+          "isTransparent": false,
+          "showSymbolLogo": true,
+          "displayMode": "adaptive"
+        }`;
+      container.current.appendChild(script);
     },
-    {
-      "proName": "FOREXCOM:NSXUSD",
-      "title": "US 100 Cash CFD"
-    },
-    {
-      "proName": "FX_IDC:EURUSD",
-      "title": "EUR to USD"
-    },
-    {
-      "proName": "BITSTAMP:BTCUSD",
-      "title": "Bitcoin"
-    },
-    {
-      "proName": "BITSTAMP:ETHUSD",
-      "title": "Ethereum"
-    },
-    {
-      "proName": "NASDAQ:TSLA",
-      "title": "Tesla"
-    }
-  ],
-  "colorTheme": "light",
-  "locale": "en",
-  "largeChartUrl": "",
-  "isTransparent": false,
-  "showSymbolLogo": true,
-  "displayMode": "adaptive"
+    []
+  );
+
+  return (
+    <div className="tradingview-widget-container" ref={container}>
+      <div className="tradingview-widget-container__widget"></div>
+      <div className="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span className="blue-text">Ticker tape by TradingView</span></a></div>
+    </div>
+  );
 }
-  </script>
-</div>
-<!-- TradingView Widget END -->
+
+export default memo(TradingViewWidget);
+
